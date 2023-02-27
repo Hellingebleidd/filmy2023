@@ -1,0 +1,15 @@
+<p>users works!</p>
+<ul>
+    <li *ngFor="let user of users" (click)="onUserClick(user)">{{user}}</li>
+</ul>
+<div *ngIf="activeUser">
+    Active user: {{activeUser.name}}
+</div>
+<table mat-table [dataSource]="users">
+    <mat-text-column name="name" headerText="Name"></mat-text-column>
+    <mat-text-column name="id" headerText="ID"></mat-text-column>
+    <mat-text-column name="email" headerText="E-mail"></mat-text-column>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+</table>
