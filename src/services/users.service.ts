@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { User } from 'src/entities/user';
-import { catchError, EMPTY, map, Observable, of, } from 'rxjs';
+import { catchError, EMPTY, map, Observable, of, Subscriber, } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Auth } from 'src/entities/auth';
 import { MessageService } from './message.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,45 @@ export class UsersService {
     new User('AlicaService','alica@alica.sk'),
     new User('BobService', 'bobik@kubik.sk', 1, new Date(),'tajne')];
 
-  token='';
+    userSubscriber?: Subscriber<string>
 
-  constructor(private http: HttpClient, private msgService: MessageService) { }
+  // token='';
+
+  constructor(private http: HttpClient, private msgService: MessageService, private router: Router) { }
+
+  private set token(value: string){
+    if(value){
+      localStorage.setItem("filmsToken", value);
+    } else {
+      localStorage.removeItem("filmsToken");
+    }
+  }
+
+  private get token(): string {
+    const value = localStorage.getItem("filmsToken");
+    return value || '';
+  }
+
+  private set username(value: string) {
+    this.userSubscriber?.next(value);
+    if (value) {
+      localStorage.setItem("filmsUsername", value);
+    } else {
+      localStorage.removeItem("filmsUsername");
+    }
+  }
+
+  private get username(): string {
+    const value = localStorage.getItem("filmsUsername");
+    return value || '';
+  }
+
+  getCurrentUsers$(): Observable<string>{
+    return new Observable(subscriber => {
+      this.userSubscriber=subscriber
+      subscriber.next(this.username)
+    })
+  }
 
   getLocalUsers(): Observable<User[]> {
     return of(this.users);
@@ -42,10 +79,22 @@ export class UsersService {
     return this.http.post(this.url+'login',auth, {responseType: "text"}).pipe(
       map(token =>{
         this.token=token
+        this.username=auth.name
+        this.msgService.successMessage("user "+auth.name+" successfully logged in")
         return true
       }),
       catchError(error=>this.processError(error))
     )
+  }
+
+  logout(){
+    this.http.get(this.url+'logout/' + this.token).pipe(
+      catchError(error => this.processError(error))
+    ).subscribe(() => {
+      this.token = '';
+      this.username = '';
+      this.router.navigateByUrl("/login");
+    })
   }
 
   processError(error:any):Observable<never>{
@@ -56,6 +105,12 @@ export class UsersService {
       }
       if(error.status>=400 && error.status<500){
         const msg = error.error.errorMessage || JSON.parse(error.error).errorMessage
+        if (error.status === 401 && msg === "unknown token") {
+          this.logout();
+          this.msgService.errorMessage("Session expired, please log in again.");  
+          return EMPTY;
+        }
+
         this.msgService.errorMessage(msg)
       }
       if(error.status>=500){

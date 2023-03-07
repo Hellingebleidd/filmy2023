@@ -2,3 +2,14 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+mat-toolbar .active>span {
+    color: yellow;
+}
+mat-snack-bar-container.successSnackBar .mat-mdc-button span.mdc-button__label {
+    color: lightgreen;
+}
+
+mat-snack-bar-container.errorSnackBar .mat-mdc-button span.mdc-button__label {
+    color: lightcoral;
+}
+

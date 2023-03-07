@@ -10,10 +10,10 @@ export class MessageService {
   constructor(private snackBar: MatSnackBar) { }
 
   successMessage(msg:string, duration=this.default_duration){
-    this.snackBar.open(msg, "SUCCESS", {duration: duration})
+    this.snackBar.open(msg, "SUCCESS", {duration: duration, panelClass: "successSnackBar"})
   }
 
   errorMessage(msg:string,duration=this.default_duration){
-    this.snackBar.open(msg, "ERROR", {duration: duration})
+    this.snackBar.open(msg, "ERROR", {duration: duration, panelClass: "errorSnackBar"})
   }
 }
