@@ -43,6 +43,19 @@ export class ExtendedUsersComponent implements OnInit, AfterViewInit {
             return user[colName as keyof User]?.toString() || ''
         }
       }
+      this.usersDataSource.filterPredicate=(user: User, filter: string):boolean=>{
+        if(user.name.toLowerCase().includes(filter))return true
+        if (user.email.toLowerCase().includes(filter)) return true;
+        if (user.groups?.some(g => g.name.toLowerCase().includes(filter))) return true;
+        if(user.groups?.flatMap(g=>g.permissions).some(p=>p.toLowerCase().includes(filter)))return true
+        return false
+      }
     }
+  }
+
+  onFilter(event: any){
+    const filterText= event.target.value.trim().toLowerCase()
+    this.usersDataSource.filter=filterText
+    this.usersDataSource.paginator?.firstPage();
   }
 }

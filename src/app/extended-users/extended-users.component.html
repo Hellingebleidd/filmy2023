@@ -1,3 +1,8 @@
+<mat-form-field>
+  <mat-label>filter</mat-label>
+  <input matInput (keyup)="onFilter($event)">
+</mat-form-field>
+
 <table mat-table matSort [dataSource]="usersDataSource">
   <mat-text-column name="id" headerText="ID"></mat-text-column>
   <!-- <mat-text-column name="name" headerText="Name"></mat-text-column> -->

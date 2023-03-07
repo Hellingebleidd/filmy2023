@@ -13,6 +13,7 @@ import { ExtendedUsersComponent } from './extended-users/extended-users.componen
 import { MaterialModule } from 'src/modules/material.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { GroupsToStringPipe } from 'src/pipes/groups-to-string.pipe';
+import { RegisterComponent } from '../register/register.component';
 
 
 
@@ -24,7 +25,8 @@ import { GroupsToStringPipe } from 'src/pipes/groups-to-string.pipe';
     Page404Component,
     ExtendedUsersComponent,
     NavbarComponent,
-    GroupsToStringPipe
+    GroupsToStringPipe,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

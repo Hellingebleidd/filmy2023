@@ -1,34 +1,42 @@
 <mat-toolbar color="primary">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Filmy</span>
+  <a mat-button routerLink="/users" routerLinkActive="active">
+    <mat-icon>person</mat-icon> Users
+  </a>
+  <a mat-button routerLink="/extended-users" routerLinkActive="active">
+    <mat-icon>face</mat-icon> Extended users
+  </a>
+
+  <span class="spacer"></span>
+  <span *ngIf="loggedUser; then thenBlock; else elseBlock"></span>
+
+  <ng-template #thenBlock>
+    {{ loggedUser }}
+    <button type="button" mat-button (click)="logout()">
+      <mat-icon>logout</mat-icon> Logout
     </button>
-    <span>Filmy</span>
-    <a mat-button routerLink="/users" routerLinkActive="active">
-        <mat-icon>person</mat-icon> Users
-    </a>
-    <a mat-button routerLink="/extended-users" routerLinkActive="active">
-        <mat-icon>face</mat-icon> Extended users
-    </a>
-
-    <span class="spacer"></span>
-    <span *ngIf="loggedUser; then thenBlock else elseBlock"></span>
-
-    <ng-template #thenBlock>
-      {{loggedUser}}
-      <button type="button" mat-button (click)="logout()">
-          <mat-icon>logout</mat-icon> Logout
-      </button>
   </ng-template>
   <ng-template #elseBlock>
-      <a mat-button routerLink="/login" routerLinkActive="active">
-          <mat-icon>login</mat-icon> Login
-      </a>       
+    <a mat-button routerLink="/register" routerLinkActive="active">
+      <mat-icon>person_add</mat-icon> Register
+    </a>
+
+    <a mat-button routerLink="/login" routerLinkActive="active">
+      <mat-icon>login</mat-icon> Login
+    </a>
   </ng-template>
 
-    <!-- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+  <!-- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <mat-icon>person_add</mat-icon>
     </button>
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
       <mat-icon>login</mat-icon>
     </button> -->
-  </mat-toolbar>
+</mat-toolbar>
