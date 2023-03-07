@@ -1,0 +1,13 @@
+<table mat-table [dataSource]="users">
+    <mat-text-column name="name" headerText="Name"></mat-text-column>
+    <mat-text-column name="id" headerText="ID"></mat-text-column>
+    <mat-text-column name="email" headerText="E-mail"></mat-text-column>
+    <mat-text-column name="lastLogin" headerText="Last login"></mat-text-column>
+    <mat-text-column name="active" headerText="Active"></mat-text-column>
+    <mat-text-column name="groups" headerText="Groups"></mat-text-column>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+</table>
