@@ -8,7 +8,7 @@ import { UsersService } from 'src/services/users.service';
   styleUrls: ['./extended-users.component.css'],
 })
 export class ExtendedUsersComponent implements OnInit {
-  columnsToDisplay = ['id', 'name', 'email', 'lastLogin', 'active', 'groups'];
+  columnsToDisplay = ['id', 'name', 'email', 'lastLogin', 'active', 'groups','perms'];
 
   users: User[] = [];
 
