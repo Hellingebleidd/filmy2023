@@ -9,13 +9,16 @@
               <mat-label>Select your user name</mat-label>
               <input matInput formControlName="name">
               <!-- <mat-hint>please, insert user name</mat-hint> -->
-              <mat-error>Username must have at least 2 characters</mat-error>
+              <mat-error *ngIf="name.errors && name.errors['required']">username is required</mat-error>
+              <mat-error *ngIf="name.errors && name.errors['minlength']">username must have at least {{name.errors['minlength']['requiredLength']}} characters</mat-error>
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>E-mail</mat-label>
             <input matInput formControlName="email" >
             <!-- <mat-hint>insert your active e-mail</mat-hint> -->
-            <mat-error>Username must have at least 2 characters</mat-error>
+            <mat-error *ngIf="email.errors && email.errors['required']">email is required</mat-error>
+            <mat-error *ngIf="email.errors && email.errors['email']">enter existing email</mat-error>
+            <mat-error *ngIf="email.errors && email.errors['pattern']">enter existing email</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Enter your password</mat-label>
@@ -25,7 +28,8 @@
                 [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
-            <mat-error>You have not inserted the password</mat-error>
+            <mat-hint>{{pswdMessage}}</mat-hint>
+            <mat-error *ngIf="password.errors && password.errors['weakPassword']">{{password.errors['weakPassword']}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Enter your password again</mat-label>
