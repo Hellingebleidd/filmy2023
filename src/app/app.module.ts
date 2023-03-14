@@ -14,6 +14,8 @@ import { MaterialModule } from 'src/modules/material.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { GroupsToStringPipe } from 'src/pipes/groups-to-string.pipe';
 import { RegisterComponent } from '../register/register.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 
 
@@ -27,6 +29,8 @@ import { RegisterComponent } from '../register/register.component';
     NavbarComponent,
     GroupsToStringPipe,
     RegisterComponent,
+    ConfirmDialogComponent,
+    EditUserComponent,
   ],
   imports: [
     BrowserModule,

@@ -48,6 +48,19 @@
     </td>
   </ng-container>
 
+  <ng-container matColumnDef="buttons">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+    <td mat-cell *matCellDef="let user" nowrap>
+      <button type="button" mat-icon-button color="warn" (click)="deleteUser(user)">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+      <a mat-icon-button color="primary">
+        <mat-icon>edit</mat-icon>
+      </a>
+    </td>
+  </ng-container>
+
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
   <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
 </table>

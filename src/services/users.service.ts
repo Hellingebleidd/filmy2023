@@ -124,6 +124,13 @@ export class UsersService {
     )
   }
 
+  deleteUser(userId: number): Observable <boolean>{
+    return this.http.delete(this.url + 'user/'+userId+'/'+this.token).pipe(
+      map(()=> true),
+      catchError((error) => this.processError(error))
+    )
+  }
+
   processError(error: any): Observable<never> {
     if (error instanceof HttpErrorResponse) {
       if (error.status === 0) {
