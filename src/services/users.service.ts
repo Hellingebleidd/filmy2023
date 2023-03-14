@@ -131,15 +131,21 @@ export class UsersService {
     )
   }
 
+  getUser(userId: number):Observable<User>{
+    return this.http.get<User>(this.url+'user/'+userId+'/'+this.token).pipe(
+      map(jsonUser => User.clone((jsonUser)),
+      catchError((error) => this.processError(error))
+    ))
+  }
+
   processError(error: any): Observable<never> {
     if (error instanceof HttpErrorResponse) {
       if (error.status === 0) {
         //server nedostupny, neodpoveda
         this.msgService.errorMessage('server not available');
       }
-      if (error.status >= 400 && error.status < 500) {
-        const msg =
-          error.error.errorMessage || JSON.parse(error.error).errorMessage;
+      if (error.status >= 400 && error.status < 500) {        
+        const msg = error.error.errorMessage || JSON.parse(error.error).errorMessage;
         if (error.status === 401 && msg === 'unknown token') {
           this.logout();
           this.msgService.errorMessage('Session expired, please log in again.');
