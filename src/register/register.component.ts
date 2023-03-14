@@ -34,7 +34,7 @@ export class RegisterComponent {
     }),
     password: new FormControl('', this.pswdValidator),
     password2: new FormControl(''),
-  });
+  }, this.passwordsMatchValidator);
 
   get name(): FormControl<string> {
     return this.registerForm.get('name') as FormControl<string>;
@@ -46,8 +46,25 @@ export class RegisterComponent {
     return this.registerForm.get('password') as FormControl<string>;
   }
   get password2(): FormControl<string> {
-    return this.registerForm.get('password') as FormControl<string>;
+    return this.registerForm.get('password2') as FormControl<string>;
   }
+
+  passwordsMatchValidator(control: AbstractControl): ValidationErrors | null{
+    //teraz skusam normalnu a nie sipkovu funkciu jak tam hore
+    const passwordModel = control.get('password') //toto je ten formcontrol co je vyssie
+    const password2Model = control.get('password2') 
+    if(passwordModel?.value===password2Model?.value){
+      password2Model?.setErrors(null)
+      return null
+    }else{
+      const err = {'diffPasswords': 'passwords do not match'}
+      password2Model?.setErrors(err)
+      return err
+    }
+  }
+  // stringify(error:any): string{
+  //   return JSON.stringify(error)
+  // }
 
   onSubmit() {
     const newUser = new User(

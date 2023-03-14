@@ -35,11 +35,12 @@
             <mat-label>Enter your password again</mat-label>
             <input matInput 
                     [type]="hide ? 'password' : 'text'" required formControlName="password2">
-            <mat-error>You have not inserted the password</mat-error>
+            <mat-error *ngIf="password2.errors && password2.errors['diffPasswords']">{{password2.errors['diffPasswords']  }}</mat-error>
+            <!-- <mat-error>{{stringify(password2.errors)}}</mat-error> -->
         </mat-form-field>
       </mat-card-content>
       <mat-card-actions>
-        <button type="submit" mat-raised-button color="primary">Register</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="registerForm.invalid">Register</button>
       </mat-card-actions>
     </mat-card>
   </form>
