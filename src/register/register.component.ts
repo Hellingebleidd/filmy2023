@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { map, Observable } from 'rxjs';
 import { User } from 'src/entities/user';
 import { UsersService } from 'src/services/users.service';
 import * as zxcvbn from 'zxcvbn'
@@ -27,10 +28,12 @@ export class RegisterComponent {
   registerForm = new FormGroup({
     name: new FormControl('', {
       validators: [Validators.required, Validators.minLength(3)],
+      asyncValidators: this.userConflictValidator('name')
     }),
     email: new FormControl<string>('', {
       nonNullable: true,
       validators: [Validators.required, Validators.email, Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$")],
+      asyncValidators: this.userConflictValidator('email')
     }),
     password: new FormControl('', this.pswdValidator),
     password2: new FormControl(''),
@@ -62,6 +65,25 @@ export class RegisterComponent {
       return err
     }
   }
+
+  //parametricky validator urobime -> vracia validator ktory nie je uz parametricky
+  userConflictValidator(field: 'name' | 'email'): AsyncValidatorFn{ //string ktory ma dve povolene hodnoty
+    //vraciame funkciu s normalnym validatorom
+    return (control:AbstractControl): Observable<ValidationErrors | null> =>{
+      const name = field==='name' ? control.value : ''
+      const email = field==='email' ? control.value : ''
+
+      const user= new User(name, email);
+
+      return this.usersService.userConflicts(user).pipe(
+        map( arrayConflicts => {
+          if(arrayConflicts.length===0) return null;
+          return { serverConflict: field + ' already used'}
+        })
+      )
+    }
+  }
+
   // stringify(error:any): string{
   //   return JSON.stringify(error)
   // }

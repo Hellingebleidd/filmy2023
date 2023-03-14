@@ -114,8 +114,14 @@ export class UsersService {
         );
         this.router.navigateByUrl('/login');
       }),
-      catchError((error) => this.processError(error))
+      
     );
+  }
+
+  userConflicts(user:User): Observable<string[]>{
+    return this.http.post<string[]>(this.url+'user-conflicts', user).pipe(
+      catchError((error) => this.processError(error))
+    )
   }
 
   processError(error: any): Observable<never> {

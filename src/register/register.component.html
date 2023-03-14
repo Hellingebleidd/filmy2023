@@ -11,7 +11,8 @@
               <!-- <mat-hint>please, insert user name</mat-hint> -->
               <mat-error *ngIf="name.errors && name.errors['required']">username is required</mat-error>
               <mat-error *ngIf="name.errors && name.errors['minlength']">username must have at least {{name.errors['minlength']['requiredLength']}} characters</mat-error>
-          </mat-form-field>
+              <mat-error *ngIf="name.errors && name.errors['serverConflict']">{{name.errors['serverConflict']}}</mat-error>
+            </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>E-mail</mat-label>
             <input matInput formControlName="email" >
@@ -19,6 +20,7 @@
             <mat-error *ngIf="email.errors && email.errors['required']">email is required</mat-error>
             <mat-error *ngIf="email.errors && email.errors['email']">enter existing email</mat-error>
             <mat-error *ngIf="email.errors && email.errors['pattern']">enter existing email</mat-error>
+            <mat-error *ngIf="email.errors && email.errors['serverConflict']">{{email.errors['serverConflict']}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Enter your password</mat-label>
