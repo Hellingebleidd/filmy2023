@@ -2,7 +2,7 @@
 <a mat-icon-button routerLink="../{{(userId || 0 )-1}}"><mat-icon>arrow_back</mat-icon></a>
 <a mat-icon-button routerLink="../{{(userId || 0 )+1}}"><mat-icon>arrow_forward</mat-icon></a>
 
-<form (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()" [formGroup]="editForm">
     <mat-card>
         <mat-card-header>
           <mat-card-title *ngIf="userId">Editing user with id {{userId}} and name {{user?.name}}</mat-card-title>
