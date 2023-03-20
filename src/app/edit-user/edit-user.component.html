@@ -5,7 +5,8 @@
 <form (ngSubmit)="onSubmit()">
     <mat-card>
         <mat-card-header>
-          <mat-card-title>Editing user with id {{userId}} and name {{user?.name}}</mat-card-title>
+          <mat-card-title *ngIf="userId">Editing user with id {{userId}} and name {{user?.name}}</mat-card-title>
+          <mat-card-title *ngIf="!userId">Creating new user</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <mat-form-field appearance="fill">
@@ -36,6 +37,12 @@
                   <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
               </button>
           </mat-form-field>
+
+          <mat-slide-toggle formArrayName="active">Is active user</mat-slide-toggle>
+          <div formArrayName="groups">
+            <mat-checkbox *ngFor="let grModel of groups.controls; let i=index" [formControlName]="i">{{allGroups[i].name}}</mat-checkbox>
+          </div>
+
         </mat-card-content>
         <mat-card-actions>
           <button type="submit" mat-raised-button color="primary"

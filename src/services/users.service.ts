@@ -5,6 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Auth } from 'src/entities/auth';
 import { MessageService } from './message.service';
 import { Router } from '@angular/router';
+import { Group } from 'src/entities/group';
 
 @Injectable({
   providedIn: 'root',
@@ -132,10 +133,25 @@ export class UsersService {
   }
 
   getUser(userId: number):Observable<User>{
-    return this.http.get<User>(this.url+'user/'+userId+'/'+this.token).pipe(
+    return this.http.get<User>(this.url + 'user/'+userId+'/' + this.token).pipe(
       map(jsonUser => User.clone((jsonUser)),
       catchError((error) => this.processError(error))
     ))
+  }
+
+  saveUser(user:User): Observable<User> {
+    return this.http.post<User>(this.url + 'users/' + this.token, user).pipe(
+      map(jsonUser => User.clone(jsonUser)),
+      tap(user => this.msgService.successMessage("User " + user.name + " saved on server")),
+      catchError(error => this.processError(error))
+    );
+  }
+
+  getGroups(): Observable<Group[]> {
+    return this.http.get<Group[]>(this.url + 'groups').pipe(
+      map(jsonGroups => jsonGroups.map(g => Group.clone(g))),
+      catchError(error => this.processError(error))
+    )
   }
 
   processError(error: any): Observable<never> {

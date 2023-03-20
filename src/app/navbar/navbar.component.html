@@ -13,6 +13,9 @@
   <a mat-button routerLink="/extended-users" routerLinkActive="active">
     <mat-icon>face</mat-icon> Extended users
   </a>
+  <a mat-button routerLink="/user/new" routerLinkActive="active">
+    <mat-icon>person_add</mat-icon> New User
+  </a>
 
   <span class="spacer"></span>
   <span *ngIf="loggedUser; then thenBlock; else elseBlock"></span>
