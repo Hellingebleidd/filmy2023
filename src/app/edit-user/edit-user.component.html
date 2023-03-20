@@ -1,3 +1,46 @@
-<p>editing user with id {{userId}} and name {{user?.name}}</p>
+<!-- <p>editing user with id {{userId}} and name {{user?.name}}</p> -->
 <a mat-icon-button routerLink="../{{(userId || 0 )-1}}"><mat-icon>arrow_back</mat-icon></a>
 <a mat-icon-button routerLink="../{{(userId || 0 )+1}}"><mat-icon>arrow_forward</mat-icon></a>
+
+<form (ngSubmit)="onSubmit()">
+    <mat-card>
+        <mat-card-header>
+          <mat-card-title>Editing user with id {{userId}} and name {{user?.name}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field appearance="fill">
+                <mat-label>User name</mat-label>
+                <input matInput formControlName="name">
+                <mat-hint>please, insert user name</mat-hint>
+                <mat-error *ngIf="name.errors && name.errors['required']">Name is required</mat-error>
+                <mat-error *ngIf="name.errors && name.errors['serverConflict']">
+                  {{name.errors['serverConflict']}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>E-mail</mat-label>
+              <input matInput formControlName="email">
+              <mat-hint>insert your active e-mail</mat-hint>
+              <mat-error *ngIf="email.errors && email.errors['required']">E-mail is required</mat-error>
+              <mat-error *ngIf="email.errors && email.errors['email']">E-mail is in wrong format</mat-error>
+              <mat-error *ngIf="email.errors && email.errors['pattern']">E-mail is in wrong format</mat-error>
+              <mat-error *ngIf="email.errors && email.errors['serverConflict']">
+                {{email.errors['serverConflict']}}
+              </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+              <mat-label>Enter user's password</mat-label>
+              <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" >
+              <button type="button" mat-icon-button matSuffix (click)="hide = !hide" 
+                  [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+          </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+          <button type="submit" mat-raised-button color="primary"
+            [disabled]="editForm.invalid">Save user</button>
+        </mat-card-actions>
+      </mat-card>
+  
+</form>
