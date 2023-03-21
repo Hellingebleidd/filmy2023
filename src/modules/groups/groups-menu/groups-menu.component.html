@@ -1,0 +1,6 @@
+<nav mat-tab-nav-bar mat-align-tabs="start" mat-stretch-tabs="false" [tabPanel]="tabPanel">
+    <a mat-tab-link routerLink="/groups" routerLinkActive="active">List</a>
+    <a mat-tab-link routerLink="/groups/detail/1" routerLinkActive="active">Detail</a>
+</nav>
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+<router-outlet></router-outlet>

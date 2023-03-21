@@ -153,6 +153,12 @@ export class UsersService {
       catchError(error => this.processError(error))
     )
   }
+  getGroup(id:number): Observable<Group> {
+    return this.http.get<Group>(this.url + 'groups/'+id).pipe(
+      map(g => Group.clone(g)),
+      catchError(error => this.processError(error)
+    ))
+  }
 
   processError(error: any): Observable<never> {
     if (error instanceof HttpErrorResponse) {

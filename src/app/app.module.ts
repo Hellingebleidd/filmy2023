@@ -16,6 +16,7 @@ import { GroupsToStringPipe } from 'src/pipes/groups-to-string.pipe';
 import { RegisterComponent } from '../register/register.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { GroupsModule } from 'src/modules/groups/groups.module';
 
 
 
@@ -38,8 +39,9 @@ import { EditUserComponent } from './edit-user/edit-user.component';
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    AppRoutingModule,
-    ReactiveFormsModule
+    GroupsModule,
+    ReactiveFormsModule,
+    AppRoutingModule //tento musi byt posldeny
   ],
   providers: [],
   bootstrap: [AppComponent]
