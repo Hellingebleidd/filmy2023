@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import { User } from 'src/entities/user';
-import { catchError, EMPTY, map, Observable, of, Subscriber, tap } from 'rxjs';
+import { catchError, defaultIfEmpty, EMPTY, map, Observable, of, Subscriber, tap } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Auth } from 'src/entities/auth';
 import { MessageService } from './message.service';
 import { Router } from '@angular/router';
 import { Group } from 'src/entities/group';
 
+const DEFAULT_NAVIGATE_AFTER_LOGIN = '/extended-users';
+
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
+  navigateAfterLogin = DEFAULT_NAVIGATE_AFTER_LOGIN;
   url = 'http://localhost:8080/';
 
   users: User[] = [
@@ -101,6 +104,7 @@ export class UsersService {
       .get(this.url + 'logout/' + this.token)
       .pipe(catchError((error) => this.processError(error)))
       .subscribe(() => {
+        this.navigateAfterLogin = DEFAULT_NAVIGATE_AFTER_LOGIN;
         this.token = '';
         this.username = '';
         this.router.navigateByUrl('/login');
@@ -115,7 +119,7 @@ export class UsersService {
         );
         this.router.navigateByUrl('/login');
       }),
-      
+
     );
   }
 
@@ -160,13 +164,32 @@ export class UsersService {
     ))
   }
 
+  checkToken(): Observable<boolean>{
+    if (! this.token)
+      return of(false);
+    return this.http.get(this.url + 'check-token/' + this.token).pipe(
+      catchError(error => this.processError(error)),
+      defaultIfEmpty(false),
+      map(val => val !== false)
+    )
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.token;
+  }
+
+  isLoggedInAsync(): Observable<boolean> {
+    return this.checkToken();
+  }
+
+
   processError(error: any): Observable<never> {
     if (error instanceof HttpErrorResponse) {
       if (error.status === 0) {
         //server nedostupny, neodpoveda
         this.msgService.errorMessage('server not available');
       }
-      if (error.status >= 400 && error.status < 500) {        
+      if (error.status >= 400 && error.status < 500) {
         const msg = error.error.errorMessage || JSON.parse(error.error).errorMessage;
         if (error.status === 401 && msg === 'unknown token') {
           this.logout();

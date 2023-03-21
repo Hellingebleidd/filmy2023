@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { DeactivateGuard } from 'src/guards/deactivate.guard';
 import { RegisterComponent } from 'src/register/register.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { ExtendedUsersComponent } from './extended-users/extended-users.component';
@@ -9,9 +11,9 @@ import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   {path: "users", component: UsersComponent},
-  {path: "extended-users", component: ExtendedUsersComponent},
-  {path: "user/edit/:id", component: EditUserComponent, data: {hocico: true}},
-  {path: "user/new", component: EditUserComponent},
+  {path: "extended-users", component: ExtendedUsersComponent, canActivate:[AuthGuard]},
+  {path: "user/edit/:id", component: EditUserComponent, data: {hocico: true},canActivate:[AuthGuard], canDeactivate:[DeactivateGuard]},
+  {path: "user/new", component: EditUserComponent,canActivate:[AuthGuard],canDeactivate:[DeactivateGuard]},
   {path: "login", component: LoginComponent},
   {path: "register", component: RegisterComponent},
   {path: "", redirectTo: "users", pathMatch: "full"},
