@@ -16,7 +16,7 @@ export class GroupResolverService implements Resolve<Group>{
     //hodi sa na filmy potom?
 
     const groupId = +(route.paramMap.get("id") || 0) //pretypujem na number
-    debugger;
+    // debugger;
     return this.usersService.getGroup(groupId)
     
   }
