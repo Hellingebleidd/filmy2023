@@ -7,7 +7,7 @@ import { GroupsMenuComponent } from './groups-menu/groups-menu.component';
 
 const routes: Routes = [
   {
-    path: 'groups',
+    path: '', //uz bol fixnuty u rodica, nemoze tu byt zase 'groups' napisane
     component: GroupsMenuComponent,
     children: [
       { path: '', component: GroupsListComponent },
