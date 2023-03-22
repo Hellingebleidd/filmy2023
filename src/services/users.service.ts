@@ -158,7 +158,7 @@ export class UsersService {
     )
   }
   getGroup(id:number): Observable<Group> {
-    return this.http.get<Group>(this.url + 'groups/'+id).pipe(
+    return this.http.get<Group>(this.url + 'group/'+id).pipe(
       map(g => Group.clone(g)),
       catchError(error => this.processError(error)
     ))
