@@ -10,6 +10,7 @@ import { UsersService } from 'src/services/users.service';
 })
 export class GroupsListComponent implements OnInit{
 
+  groupToEdit?: Group
   groups$?: Observable<Group[]>
 
 
@@ -17,5 +18,13 @@ export class GroupsListComponent implements OnInit{
 
   ngOnInit(): void {
     this.groups$ = this.usersService.getGroups(); //toto mi vrati ruru
+  }
+
+  onSave(groupToSave: Group){
+    this.usersService.saveGroup(groupToSave).subscribe(saved=>{
+      this.ngOnInit()
+      this.groupToEdit=undefined
+    }
+    )
   }
 }

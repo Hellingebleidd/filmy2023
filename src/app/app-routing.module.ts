@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: "user/new", component: EditUserComponent,canActivate:[AuthGuard],canDeactivate:[DeactivateGuard]},
   {path: "login", component: LoginComponent},
   {path: "register", component: RegisterComponent},
-  {path: "groups", canMatch:[AuthGuard], canActivate:[AuthGuard], loadChildren: ()=> import('../modules/groups/groups.module').then(mod => mod.GroupsModule)},
+  {path: "groups", canMatch:[AuthGuard], loadChildren: ()=> import('../modules/groups/groups.module').then(mod => mod.GroupsModule)},
   {path: "", redirectTo: "users", pathMatch: "full"},
   {path: "**", component: Page404Component}
 ];

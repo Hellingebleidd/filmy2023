@@ -164,6 +164,13 @@ export class UsersService {
     ))
   }
 
+  saveGroup(group: Group):Observable<Group>{
+    return this.http.post<Group>(this.url+'groups/'+this.token, group).pipe(
+      map(g => Group.clone(g)),
+      catchError(error => this.processError(error))
+      )
+  }
+
   checkToken(): Observable<boolean>{
     if (! this.token)
       return of(false);
