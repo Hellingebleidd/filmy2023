@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { FilmsRoutingModule } from './films-routing.module';
 import { FilmsListComponent } from './films-list/films-list.component';
+import { MaterialModule } from '../material.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -11,6 +13,8 @@ import { FilmsListComponent } from './films-list/films-list.component';
   ],
   imports: [
     CommonModule,
+    HttpClientModule,
+    MaterialModule,
     FilmsRoutingModule
   ]
 })
