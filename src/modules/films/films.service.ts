@@ -36,7 +36,7 @@ export class FilmsService {
     indexFrom?: number,
     indexTo?: number,
     search?: string): Observable<FilmsResponse> {
-      
+
     //toto cele by mohlo byt aj navratvy typ tej funkcie getHeaders
     let options: { headers?: { [header: string]: string }; params?: HttpParams } | undefined = this.getHeader();
 
@@ -51,8 +51,7 @@ export class FilmsService {
       if (search) {options.params = options.params?.set('search', search);} 
     }
 
-    return this.http
-      .get<FilmsResponse>(this.url + 'films', options)
-      .pipe(catchError((err) => this.usersService.processError(err)));
+    return this.http.get<FilmsResponse>(this.url + 'films', options).pipe(
+      catchError((err) => this.usersService.processError(err)));
   }
 }
