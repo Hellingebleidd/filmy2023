@@ -3,7 +3,7 @@
     <input matInput (keyup)="onFilter($event)">
   </mat-form-field>
   
-  <table mat-table matSort [dataSource]="filmsDataSource">
+  <table mat-table matSort [dataSource]="filmsDataSource" multiTemplateDataRows>
     <mat-text-column name="id" headerText="ID"></mat-text-column>
     <!-- <mat-text-column name="name" headerText="Name"></mat-text-column> -->
     <ng-container matColumnDef="nazov">
@@ -39,10 +39,29 @@
           {{ film.poradieVRebricku['AFI 2007'] }}
         </td>
       </ng-container>
+
+      <!-- expand tabulka -->
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let film" [attr.colspan]="columnsToDisplay.length">
+          <div class="example-element-detail"
+               [@detailExpand]="film == expandedElement ? 'expanded' : 'collapsed'">
+    
+               <!-- <app-film-detail [imdbId]="film.imdbID"></app-film-detail> -->
+               <app-film-detail></app-film-detail>
+    
+          </div>
+        </td>
+      </ng-container>
       
   
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let film; columns: columnsToDisplay;"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement ===film"
+      (click)="expandedElement = expandedElement ===film ? null :film">
+  </tr>
+  <tr mat-row *matRowDef="let myRowData; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    <!-- <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr> -->
   </table>
   
   <mat-paginator

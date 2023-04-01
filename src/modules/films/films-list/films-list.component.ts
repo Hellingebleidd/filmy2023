@@ -6,11 +6,19 @@ import { mergeAll, Observable, Subject, switchMap, tap, map, of } from 'rxjs';
 import { Film } from 'src/entities/film';
 import { UsersService } from 'src/services/users.service';
 import { FilmsService } from '../films.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-films-list',
   templateUrl: './films-list.component.html',
-  styleUrls: ['./films-list.component.css']
+  styleUrls: ['./films-list.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class FilmsListComponent implements OnInit, AfterViewInit{
 
@@ -20,6 +28,8 @@ export class FilmsListComponent implements OnInit, AfterViewInit{
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
   filterEmitter = new EventEmitter<string>()
+
+  expandedElement: string | null | undefined // FilmDetail | null;
 
   constructor(private filmsService: FilmsService, private usersService: UsersService){
     this.filmsDataSource=new FilmsDataSource(filmsService)
