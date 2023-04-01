@@ -18,6 +18,7 @@ const routes: Routes = [
   {path: "register", component: RegisterComponent},
   {path: "groups", canMatch:[AuthGuard], loadChildren: ()=> import('../modules/groups/groups.module').then(mod => mod.GroupsModule)},
   {path: "films", loadChildren:()=> import('../modules/films/films.module').then(mod => mod.FilmsModule)},
+  {path: "chat", loadChildren:()=> import('../modules/chat/chat.module').then(mod => mod.ChatModule)},
   {path: "", redirectTo: "users", pathMatch: "full"},
   {path: "**", component: Page404Component}
 ];
