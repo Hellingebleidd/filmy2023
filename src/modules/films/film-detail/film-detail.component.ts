@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { environment } from 'src/environment/environment';
 
 @Component({
@@ -7,18 +7,24 @@ import { environment } from 'src/environment/environment';
   templateUrl: './film-detail.component.html',
   styleUrls: ['./film-detail.component.css']
 })
-export class FilmDetailComponent implements OnInit{
+export class FilmDetailComponent implements OnChanges{
 
   @Input() imdbId?: string
 
   url: string = environment.omdbApi_url
   movieData: any
+  id=''
 
   constructor(private http: HttpClient){}
 
-  ngOnInit(): void {
-    const id = this.imdbId
-    this.http.get(this.url+id).subscribe(data=>this.movieData=data)
+  ngOnChanges(changes: SimpleChanges): void {
+    this.id=this.imdbId || ''
+    if(this.id) this.http.get(this.url+this.id).subscribe(data=>this.movieData=data)
   }
+
+  // ngOnInit(): void {
+  //   const id = this.imdbId
+  //   this.http.get(this.url+id).subscribe(data=>this.movieData=data)
+  // }
 
 }

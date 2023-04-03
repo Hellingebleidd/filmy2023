@@ -1,3 +1,4 @@
+
 .info_section {
     position: relative;
     width: 100%;
@@ -5,24 +6,25 @@
 }
 .movie_header {
     position: relative;
-    /* padding: 25px; */
-    height: 40%;
     margin-left: 5px;
-    margin-bottom: 5px;
 }
 h1 {
-    color: black;
+    color: #673ab7;
     font-weight: 400;
     margin-bottom: 0;
 }
+h4{
+  color: #673ab7;
+  font-weight: 500;
+  margin-bottom: 0;
+}
 .details {
     color: #555;
-    /* font-weight: 400; */
     margin-left: 15px;
+    padding-left: 20px;
 }
 .minutes {
     display: inline-block;
-    /* margin-top: 15px; */
     color: #555;
     padding: 5px;
     border-radius: 5px;
@@ -41,8 +43,6 @@ h1 {
     box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.5);
 }
 .plot {
-    padding: 25px;
-    color: #545454;
-    margin-left: 5px;
+    display: inline;
 }
 
