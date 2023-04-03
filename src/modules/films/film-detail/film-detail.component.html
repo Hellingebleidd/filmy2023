@@ -1,1 +1,48 @@
-<p>film-detail works!</p>
+<!-- <h2>{{ imdbId }}</h2> -->
+
+<!-- <div *ngIf="movieData">
+  <img
+    src="{{ movieData.Poster }}"
+    alt="{{ movieData.Title }}"
+    class="movie__img"
+  />
+
+  <h2>Title: {{ movieData.Title }}</h2>
+</div> -->
+
+<div class="info_section" *ngIf="movieData">
+  <div class="movie_header">
+    <img class="poster" src="{{ movieData.Poster }}" />
+    <h1>{{ movieData.Title }}</h1>
+    <p class="genres">{{ movieData.Genre }}</p>
+    <div>
+      <span class="minutes">{{ movieData.Language }}</span
+      ><span class="minutes">{{ movieData.Runtime }}</span>
+
+      <!-- <p class="minutes">{{movieData.Runtime}}</p> -->
+      <p class="details">
+        {{ movieData.Country }}, {{ movieData.Year }}, {{ movieData.Director }}
+      </p>
+    </div>
+  </div>
+  <div class="plot">
+    <p>
+      {{ movieData.Plot }}
+    </p>
+  </div>
+</div>
+
+<!-- <div class="info_section" *ngIf="movieData">
+    <div class="movie_header">
+      <img class="poster" src="{{movieData.Poster}}"/>
+      <h1>{{movieData.Title}}</h1>
+      <h4>{{movieData.Year}}, {{movieData.Director}}</h4>
+      <span class="minutes">{{movieData.Runtime}}</span>
+      <p class="genres">{{movieData.Genre}}</p>
+    </div>
+    <div class="plot">
+      <p>
+        {{movieData.Plot}}
+    </p>
+    </div>
+  </div> -->

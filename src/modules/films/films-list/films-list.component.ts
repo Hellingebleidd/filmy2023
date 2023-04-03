@@ -29,7 +29,7 @@ export class FilmsListComponent implements OnInit, AfterViewInit{
   @ViewChild(MatSort) sort?: MatSort;
   filterEmitter = new EventEmitter<string>()
 
-  expandedElement: string | null | undefined // FilmDetail | null;
+  expandedElement: string | undefined 
 
   constructor(private filmsService: FilmsService, private usersService: UsersService){
     this.filmsDataSource=new FilmsDataSource(filmsService)
