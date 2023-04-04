@@ -46,7 +46,8 @@
           <div class="example-element-detail"
                [@detailExpand]="film == expandedElement ? 'expanded' : 'collapsed'">
 
-               <app-film-detail *ngIf="film.imdbID" [imdbId]="film.imdbID"></app-film-detail>
+               <!-- <app-film-detail *ngIf="film.imdbID" [imdbId]="film.imdbID"></app-film-detail> -->
+               <app-film-detail *ngIf="movieData" [imdbFilm]="movieData"></app-film-detail>
 
 
           </div>
@@ -58,9 +59,9 @@
     <tr mat-row *matRowDef="let film; columns: columnsToDisplay;"
       class="example-element-row"
       [class.example-expanded-row]="expandedElement ===film"
-      (click)="expandedElement = expandedElement ===film ? null :film">
+      (click)="expandedElement = expandedElement ===film ? null :film; loadMovie(film.imdbID)">
   </tr>
-  <tr mat-row *matRowDef="let myRowData; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  <tr mat-row *matRowDef="let film; columns: ['expandedDetail']" class="example-detail-row"></tr>
     <!-- <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr> -->
   </table>
 

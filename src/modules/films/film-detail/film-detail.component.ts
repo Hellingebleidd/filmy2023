@@ -10,7 +10,8 @@ import { FilmsService, omdbFilm } from '../films.service';
 })
 export class FilmDetailComponent implements OnChanges{
 
-  @Input() imdbId?: string
+  // @Input() imdbId?: string
+  @Input() imdbFilm?: omdbFilm
 
   url: string = environment.omdbApi_url
   movieData?: omdbFilm
@@ -18,12 +19,17 @@ export class FilmDetailComponent implements OnChanges{
 
   constructor(private http: HttpClient, private filmsService: FilmsService){}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.id=this.imdbId || ''
+  // ngOnChanges(changes: SimpleChanges): void {
+    // this.id=this.imdbId || ''
     // console.log("id: ", this.id);
     // if(this.id) this.http.get(this.url+this.id).subscribe(data=>this.movieData=data)
-    this.filmsService.getOmdbFilm(this.url+this.id).subscribe(data=>this.movieData=data)
-  }
+    // this.filmsService.getOmdbFilm(this.url+this.id).subscribe(data=>this.movieData=data)
+  // }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.movieData=this.imdbFilm
+
+    }
 
   // ngOnInit(): void {
   //   const id = this.imdbId

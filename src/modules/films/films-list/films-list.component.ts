@@ -7,6 +7,7 @@ import { Film } from 'src/entities/film';
 import { UsersService } from 'src/services/users.service';
 import { FilmsService, omdbFilm } from '../films.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { environment } from 'src/environment/environment';
 
 @Component({
   selector: 'app-films-list',
@@ -29,7 +30,8 @@ export class FilmsListComponent implements OnInit, AfterViewInit{
   @ViewChild(MatSort) sort?: MatSort;
   filterEmitter = new EventEmitter<string>()
 
-  expandedElement: omdbFilm | undefined
+  expandedElement: any //omdbFilm | undefined
+  movieData: any
 
   constructor(private filmsService: FilmsService, private usersService: UsersService){
     this.filmsDataSource=new FilmsDataSource(filmsService)
@@ -42,6 +44,13 @@ export class FilmsListComponent implements OnInit, AfterViewInit{
     this.filmsService.getFilms().subscribe(r => {
       this.films=r.items
       console.log('response: ', r);
+    })
+  }
+
+  loadMovie(id: string){
+    this.filmsService.getOmdbFilm(environment.omdbApi_url+id).subscribe(data=>{
+      this.movieData=data;
+      // this.expandedElement = this.films.find(film=>film.imdbID===id)
     })
   }
 
