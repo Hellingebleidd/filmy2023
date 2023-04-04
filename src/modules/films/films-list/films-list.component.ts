@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { mergeAll, Observable, Subject, switchMap, tap, map, of } from 'rxjs';
 import { Film } from 'src/entities/film';
 import { UsersService } from 'src/services/users.service';
-import { FilmsService } from '../films.service';
+import { FilmsService, omdbFilm } from '../films.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
@@ -29,7 +29,7 @@ export class FilmsListComponent implements OnInit, AfterViewInit{
   @ViewChild(MatSort) sort?: MatSort;
   filterEmitter = new EventEmitter<string>()
 
-  expandedElement: string | undefined 
+  expandedElement: omdbFilm | undefined
 
   constructor(private filmsService: FilmsService, private usersService: UsersService){
     this.filmsDataSource=new FilmsDataSource(filmsService)

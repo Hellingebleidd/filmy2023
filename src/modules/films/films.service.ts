@@ -9,6 +9,18 @@ export interface FilmsResponse {
   totalCount: number;
 }
 
+export interface omdbFilm{
+  Title: string,
+  Year: string,
+  Runtime: string,
+  Genre: string,
+  Director: string,
+  Actors: string,
+  Plot: string,
+  Poster: string,
+  Language: string
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -21,6 +33,11 @@ export class FilmsService {
   }
 
   constructor(private http: HttpClient, private usersService: UsersService) {}
+
+  getOmdbFilm(url: string){
+    return this.http.get<omdbFilm>(url).pipe(
+      catchError((err) => this.usersService.processError(err)));
+  }
 
   getHeader() {
     if (this.token) {
@@ -43,12 +60,12 @@ export class FilmsService {
     if (orderBy || descending || indexFrom || indexTo || search) {
       //chcem mat params
       options = { ...(options || {}), params: new HttpParams() };
-   
+
       if (orderBy) {options.params = options.params?.set('orderBy', orderBy);} //nemeni params ale vrati novy objek a ten povodny necha nezmeneny
-      if (descending) {options.params = options.params?.set('descending', descending);} 
-      if (indexFrom) {options.params = options.params?.set('indexFrom', indexFrom);} 
-      if (indexTo) {options.params = options.params?.set('indexTo', indexTo);} 
-      if (search) {options.params = options.params?.set('search', search);} 
+      if (descending) {options.params = options.params?.set('descending', descending);}
+      if (indexFrom) {options.params = options.params?.set('indexFrom', indexFrom);}
+      if (indexTo) {options.params = options.params?.set('indexTo', indexTo);}
+      if (search) {options.params = options.params?.set('search', search);}
     }
 
     return this.http.get<FilmsResponse>(this.url + 'films', options).pipe(

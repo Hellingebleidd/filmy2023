@@ -13,10 +13,13 @@ h1 {
     font-weight: 400;
     margin-bottom: 0;
 }
-h4{
+h4 {
   color: #673ab7;
   font-weight: 500;
   margin-bottom: 0;
+}
+.people{
+  color: #673ab7;
 }
 .details {
     color: #555;
@@ -42,7 +45,7 @@ h4{
     height: 300px;
     box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.5);
 }
-.plot {
+.plot{
     display: inline;
 }
 

@@ -4,8 +4,12 @@
     <h1>{{ movieData.Title }}</h1>
     <p class="genres">{{ movieData.Genre }}</p>
     <div>
-      <span class="minutes">{{ movieData.Language }}</span
-      ><span class="minutes">{{ movieData.Runtime }}</span>
+      <span class="minutes">{{ movieData.Language }}</span>
+      <span class="minutes">{{ movieData.Runtime }}</span>
+    </div>
+    <div>
+      <p><span class="people">Directed by: </span>{{movieData.Director}}</p>
+      <p><span class="people">Starring:</span> {{movieData.Actors}}</p>
     </div>
   </div>
   <div class="plot">
