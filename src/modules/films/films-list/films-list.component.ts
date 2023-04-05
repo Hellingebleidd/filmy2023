@@ -50,7 +50,6 @@ export class FilmsListComponent implements OnInit, AfterViewInit{
   loadMovie(id: string){
     this.filmsService.getOmdbFilm(environment.omdbApi_url+id).subscribe(data=>{
       this.movieData=data;
-      // this.expandedElement = this.films.find(film=>film.imdbID===id)
     })
   }
 
