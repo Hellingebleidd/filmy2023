@@ -47,13 +47,6 @@ export class FilmsListComponent implements OnInit, AfterViewInit{
     })
   }
 
-  loadMovie(id: string){
-    this.filmsService.getOmdbFilm(environment.omdbApi_url+id).subscribe(data=>{
-      this.movieData=data;
-      // this.expandedElement = this.films.find(film=>film.imdbID===id)
-    })
-  }
-
   ngAfterViewInit(): void {
     //zavolam paginator aj sortovac
     if(this.paginator && this.sort){
