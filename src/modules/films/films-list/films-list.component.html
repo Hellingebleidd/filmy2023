@@ -47,7 +47,7 @@
                [@detailExpand]="film == expandedElement ? 'expanded' : 'collapsed'">
 
                <!-- <app-film-detail *ngIf="film.imdbID" [imdbId]="film.imdbID"></app-film-detail> -->
-               <app-film-detail *ngIf="movieData" [imdbFilm]="movieData"></app-film-detail>
+               <app-film-detail *ngIf="movieData" [imdbFilm]="movieData" [rezia]="film.reziser" [postavy]="film.postava"></app-film-detail>
 
 
           </div>
