@@ -19,24 +19,27 @@ export class FilmDetailComponent implements OnChanges{
 
 
   movieData?: omdbFilm
-  reziser=''
-  herci: string[] = []
-  ludia?: Clovek[]
-  obsadenie=''
-
-  constructor(private http: HttpClient, private filmsService: FilmsService){}
+  reziseri=''
+  hlavnePostavy =''
+  vedlajsiePostavy=''
 
   ngOnChanges(changes: SimpleChanges): void {
     this.movieData=this.imdbFilm
 
     if(this.rezia){
-      this.rezia.map(r => this.reziser=r.krstneMeno+' ' + (r.stredneMeno? r.stredneMeno+' '+r.priezvisko : r.priezvisko))
+      this.reziseri = this.rezia.map(r=>r.krstneMeno+' ' + (r.stredneMeno? r.stredneMeno+' '+r.priezvisko : r.priezvisko))
+                                .join(', ')
 
     if(this.postavy){
-      this.ludia= this.postavy.map(p => p.herec)
-      this.herci = this.ludia.map(herec=>herec.krstneMeno+' ' + (herec.stredneMeno? herec.stredneMeno+' '+herec.priezvisko : herec.priezvisko))
-      this.obsadenie = this.herci.join(', ')
+      this.hlavnePostavy = this.postavy.filter(postava=> postava.dolezitost ==='hlavná postava')
+                                        .map(p=>(p.postava +' ( '+p.herec.krstneMeno+' '+ (p.herec.stredneMeno? p.herec.stredneMeno+' '+p.herec.priezvisko : p.herec.priezvisko)+' )'))
+                                        .join(', ')
+
+      this.vedlajsiePostavy = this.postavy.filter(postava=> postava.dolezitost ==='vedľajšia postava')
+                                           .map(p=>(p.postava +' ( '+p.herec.krstneMeno+' '+ (p.herec.stredneMeno? p.herec.stredneMeno+' '+p.herec.priezvisko : p.herec.priezvisko)+' )'))
+                                           .join(', ')
     }
+
   }
   }
 
